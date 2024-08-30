@@ -1,5 +1,5 @@
 package com.mcmmo;
 
 public interface IPlayerProfessionData {
-    PlayerProfessionData getProfessionData();
+    PlayerProfessionData mcmmo$getProfessionData();
 }

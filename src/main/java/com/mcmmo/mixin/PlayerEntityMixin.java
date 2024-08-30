@@ -21,7 +21,7 @@ public class PlayerEntityMixin implements IPlayerProfessionData {
     }
 
     @Override
-    public PlayerProfessionData getProfessionData() {
+    public PlayerProfessionData mcmmo$getProfessionData() {
         return professionData;
     }
 }

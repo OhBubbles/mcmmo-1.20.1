@@ -56,37 +56,28 @@ public class PlayerProfessionData {
 
         // Check if level up is needed
         if (newXP >= xpForNextLevel) {
-            if (currentLevel < MAX_LEVEL) {
-                levels.put(profession, currentLevel + 1);
-                // Carry over the excess XP to the next level
-                experience.put(profession, newXP - xpForNextLevel);
-                // Notify the player of level up
-                player.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 1);
-                player.sendMessage(Text.literal("§6§l" + "Congratulations! §r§6You have reached level " + (currentLevel + 1) + " in " + profession.name().substring(0, 1) + profession.name().substring(1).toLowerCase() + "!"), false);
-            } else {
-                // If the player is at max level, just set XP to max for the current level
-                experience.put(profession, xpForNextLevel);
-            }
+            levels.put(profession, currentLevel + 1);
+            // Carry over the excess XP to the next level
+            experience.put(profession, newXP - xpForNextLevel);
+            // Notify the player of level up
+            player.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 1);
+            player.sendMessage(Text.literal("§6§l" + "Congratulations! §r§6You have reached level " + (currentLevel + 1) + " in " + profession.name().charAt(0) + profession.name().substring(1).toLowerCase() + "!"), false);
         }
     }
 
     public int getXPForNextLevel(int level) {
         // Example XP curve: increases by 100 XP per level
         // return 100 + (level - 1) * 50;
-        int REQ_EXP = 100;
+        int REQ_EXP;
 
         if (level <= 15) {
             REQ_EXP = 2 * level + 7;
-        }
-        else if (level >= 16) {
+        } else if (level <= 30) {
             REQ_EXP = 5 * level - 38;
-        }
-        else if (level >= 31) {
+        } else {
             REQ_EXP = 9 * level - 158;
         }
-        else {
-            REQ_EXP = 100;
-        }
+
         return REQ_EXP;
     }
 }

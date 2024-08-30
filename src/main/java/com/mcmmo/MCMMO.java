@@ -12,9 +12,8 @@ public class MCMMO implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("Commencing Initialization");
 		BlockExperienceRegistry.init();
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			ProfessionCommand.register(dispatcher);
-		});
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> ProfessionCommand.register(dispatcher));
 	}
 }

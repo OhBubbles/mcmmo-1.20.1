@@ -10,13 +10,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class BlockBreakMixin {
-
-    @Shadow public abstract void addExperience(int experience);
 
     static {
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
@@ -33,7 +30,7 @@ public abstract class BlockBreakMixin {
 
         if (blockData != null) {
             IPlayerProfessionData professionDataAccessor = (IPlayerProfessionData) player;
-            PlayerProfessionData data = professionDataAccessor.getProfessionData();
+            PlayerProfessionData data = professionDataAccessor.mcmmo$getProfessionData();
             data.addExperience(blockData.profession(), blockData.minExp(), blockData.maxExp(), player);
             player.sendMessage(Text.literal("Gained " + data.getAmount() + " " + blockData.profession().name() + " XP!"), true);
         }

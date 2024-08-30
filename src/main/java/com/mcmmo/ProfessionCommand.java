@@ -13,7 +13,8 @@ public class ProfessionCommand {
                 .executes(context -> {
                     ServerPlayerEntity player = context.getSource().getPlayer();
                     IPlayerProfessionData professionDataAccessor = (IPlayerProfessionData) player;
-                    PlayerProfessionData professionData = professionDataAccessor.getProfessionData();
+                    assert professionDataAccessor != null;
+                    PlayerProfessionData professionData = professionDataAccessor.mcmmo$getProfessionData();
 
                     for (Profession profession : Profession.values()) {
                         int level = professionData.getLevel(profession);
