@@ -37,12 +37,20 @@ public class PlayerProfessionData {
         return levels.getOrDefault(profession, 1);
     }
 
+    public static int getRandomExp(int minEXP, int maxEXP) {
+        Random r = new Random();
+
+        if (minEXP > maxEXP) {
+            throw new IllegalArgumentException("minExp must be less than or equal to maxExp");
+        }
+        return r.nextInt(maxEXP - minEXP + 1) + minEXP;
+    }
+
     public void addExperience(Profession profession, int minEXP, int maxEXP, ServerPlayerEntity player) {
         int currentXP = getExperience(profession);
         int currentLevel = getLevel(profession);
 
-        Random r = new Random();
-        int amount = r.nextInt(maxEXP - minEXP) + minEXP;
+        int amount = getRandomExp(minEXP, maxEXP);
         AMOUNT = amount;
 
         if (currentLevel >= MAX_LEVEL) {

@@ -20,9 +20,14 @@ public class BlockExperienceRegistry {
     }
 
     public static void init() {
+        // Mining
         register(Blocks.COAL_ORE, Profession.MINING, 1, 3);
         register(Blocks.DEEPSLATE_COAL_ORE, Profession.MINING, 1, 3);
         register(Blocks.COPPER_ORE, Profession.MINING, 3, 5);
-        // ... register all other blocks similarly ...
+
+        // Foraging
+        register(Blocks.OAK_LOG, Profession.FORAGING, 1, 3);
+        register(Blocks.BIRCH_LOG, Profession.FORAGING, 1, 3);
+        register(Blocks.SPRUCE_LOG, Profession.FORAGING, 1, 3);
     }
 }
