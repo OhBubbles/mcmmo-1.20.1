@@ -50,14 +50,13 @@ public class PlayerProfessionData {
         int currentXP = getExperience(profession);
         int currentLevel = getLevel(profession);
 
-        int amount = getRandomExp(minEXP, maxEXP);
-        AMOUNT = amount;
+        AMOUNT = getRandomExp(minEXP, maxEXP);
 
         if (currentLevel >= MAX_LEVEL) {
             return; // Don't add XP if already at max level
         }
 
-        int newXP = currentXP + amount;
+        int newXP = currentXP + AMOUNT;
         int xpForNextLevel = getXPForNextLevel(currentLevel);
 
         experience.put(profession, newXP);
