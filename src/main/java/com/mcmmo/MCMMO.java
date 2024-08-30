@@ -1,5 +1,6 @@
 package com.mcmmo;
 
+import com.mcmmo.registries.BlockExperienceRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ public class MCMMO implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BlockExperienceRegistry.init();
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			ProfessionCommand.register(dispatcher);
 		});

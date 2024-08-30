@@ -8,14 +8,11 @@ import net.minecraft.text.Text;
 import java.util.EnumMap;
 import java.util.Random;
 
-import static net.minecraft.util.math.MathHelper.floor;
-
 public class PlayerProfessionData {
-    private EnumMap<Profession, Integer> experience;
-    private EnumMap<Profession, Integer> levels;
+    private final EnumMap<Profession, Integer> experience;
+    private final EnumMap<Profession, Integer> levels;
 
     private static int AMOUNT = 0;
-    private static int REQ_EXP = 100;
     private static final int MAX_LEVEL = 50;
 
     public PlayerProfessionData() {
@@ -45,23 +42,30 @@ public class PlayerProfessionData {
         int currentLevel = getLevel(profession);
 
         Random r = new Random();
-        int amount = r.nextInt(maxEXP-minEXP) + minEXP;
+        int amount = r.nextInt(maxEXP - minEXP) + minEXP;
         AMOUNT = amount;
 
         if (currentLevel >= MAX_LEVEL) {
             return; // Don't add XP if already at max level
         }
 
-        experience.put(profession, currentXP + amount);
+        int newXP = currentXP + amount;
+        int xpForNextLevel = getXPForNextLevel(currentLevel);
+
+        experience.put(profession, newXP);
 
         // Check if level up is needed
-        if (currentXP + amount >= getXPForNextLevel(currentLevel)) {
-            experience.put(profession, 0); // Reset XP after leveling up
+        if (newXP >= xpForNextLevel) {
             if (currentLevel < MAX_LEVEL) {
                 levels.put(profession, currentLevel + 1);
+                // Carry over the excess XP to the next level
+                experience.put(profession, newXP - xpForNextLevel);
                 // Notify the player of level up
                 player.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 1);
                 player.sendMessage(Text.literal("§6§l" + "Congratulations! §r§6You have reached level " + (currentLevel + 1) + " in " + profession.name().substring(0, 1) + profession.name().substring(1).toLowerCase() + "!"), false);
+            } else {
+                // If the player is at max level, just set XP to max for the current level
+                experience.put(profession, xpForNextLevel);
             }
         }
     }
@@ -69,6 +73,8 @@ public class PlayerProfessionData {
     public int getXPForNextLevel(int level) {
         // Example XP curve: increases by 100 XP per level
         // return 100 + (level - 1) * 50;
+        int REQ_EXP = 100;
+
         if (level <= 15) {
             REQ_EXP = 2 * level + 7;
         }
