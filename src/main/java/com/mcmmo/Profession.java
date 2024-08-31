@@ -1,7 +1,9 @@
 package com.mcmmo;
 
 public enum Profession {
-    MINING,
+    FARMING,
+    FISHING,
     FORAGING,
-    FISHING
+    MINING,
+    WOODCUTTING
 }

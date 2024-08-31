@@ -44,7 +44,7 @@ public abstract class FishCaughtMixin {
     @Unique
     private static void checkFishingSuccess(ServerPlayerEntity player) {
         try {
-            if (player.fishHook instanceof FishingBobberEntity) {
+            if (player.fishHook instanceof FishingBobberEntity && !player.isCreative()) {
                 FishingBobberEntity bobber = player.fishHook;
 
                 // Reflectively access the private 'caughtFish' field
